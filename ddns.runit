@@ -1,0 +1,5 @@
+#!/bin/bash
+exec 2>&1
+source /etc/envvars
+bash /etc/service/ddns/update-route53.sh
+sleep 60

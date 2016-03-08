@@ -116,6 +116,8 @@ IP=`dig +short myip.opendns.com @resolver1.opendns.com`
 
 COMMENT="Auto updating @ `date`"
 
+echo -en "IP resolves as ${IP}, updating records...\n"
+
 for i in {1..20}; do
 
   rs="R53_RS_NAME_${i}"
@@ -124,9 +126,13 @@ for i in {1..20}; do
 
   if [ ${!rs} ]; then
 
+    echo -en "Updating ${rs}...\n"
+
     # zoneId, recordSet, recordType, ip, ttl, comment
     update_dns $R53_ZONEID ${!rs} ${!tp} ${IP} ${!tl} ${COMMENT}
 
   fi
 
 done
+
+echo -en "DDNS update run complete\n"
